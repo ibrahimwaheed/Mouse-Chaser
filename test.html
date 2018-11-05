@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+ 
+<head>
+  <title>Canvas Follow Mouse</title>
+  <style>
+    canvas {
+      border: #333 2px solid;
+    }
+ 
+    body {
+      padding: 50px;
+    }
+  </style>
+</head>
+ 
+<body>
+  <canvas id="myCanvas" width="550px" height="350px"></canvas>
+ 
+  <script>
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+     
+	 function gSquare() {
+	 
+	 context.clearRect(0, 0, canvas.width, canvas.height);
+	 
+	context.beginPath();
+	context.lineWidth = "4";
+	context.fillStyle = "green";
+	context.rect(mouseX, mouseY, 20, 20);
+	context.fill();
+}
+var canvasSize = getPosition(canvas);
+var mouseX = 0;
+var mouseY = 0;
+ 
+canvas.addEventListener("mousemove", setMousePosition, false);
+ 
+function setMousePosition(e) {
+  mouseX = e.clientX - canvasSize.x;
+  mouseY = e.clientY - canvasSize.y;
+  
+  requestAnimationFrame(gSquare);
+}    
+gSquare();
+
+function getPosition(el) {
+  var xPosition = 0;
+  var yPosition = 0;
+ 
+  while (el) {
+    xPosition += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+    yPosition += (el.offsetTop - el.scrollTop + el.clientTop);
+    el = el.offsetParent;
+  }
+  return {
+    x: xPosition,
+    y: yPosition
+  };
+}  
+  </script>
+ 
+</body>
+ 
+</html>
